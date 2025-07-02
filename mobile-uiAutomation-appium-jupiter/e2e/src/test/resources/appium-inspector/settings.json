@@ -1,0 +1,322 @@
+{
+  "SESSION_SERVER_TYPE": "advanced",
+  "SESSION_SERVER_PARAMS": {
+    "local": {},
+    "remote": {
+      "path": "",
+      "port": "",
+      "hostname": "",
+      "host": ""
+    },
+    "advanced": {
+      "allowUnauthorized": false
+    },
+    "sauce": {
+      "dataCenter": "us-west-1"
+    },
+    "headspin": {},
+    "browserstack": {},
+    "lambdatest": {},
+    "testingbot": {},
+    "experitest": {},
+    "roboticmobi": {},
+    "remotetestkit": {},
+    "bitbar": {},
+    "kobiton": {},
+    "perfecto": {},
+    "pcloudy": {},
+    "mobitru": {},
+    "tvlabs": {},
+    "testcribe": {}
+  },
+  "SAVED_SESSIONS": [
+    {
+      "date": 1746187331285,
+      "name": "android_withoutApp",
+      "uuid": "b6c40ad3-9eea-4486-85af-bbd9425b814d",
+      "caps": [
+        {
+          "type": "text",
+          "value": "Android",
+          "name": "platformName"
+        },
+        {
+          "type": "text",
+          "value": "Pixel_2_API_36",
+          "name": "appium:deviceName"
+        },
+        {
+          "type": "text",
+          "name": "appium:automationName",
+          "value": "UiAutomator2"
+        },
+        {
+          "type": "number",
+          "name": "appium:avdLaunchTimeout",
+          "value": 120000
+        },
+        {
+          "type": "text",
+          "name": "appium:language",
+          "value": "en"
+        },
+        {
+          "type": "text",
+          "name": "appium:locale",
+          "value": "GB"
+        },
+        {
+          "type": "text",
+          "name": "uiautomator2ServerInstallTimeout",
+          "value": "60000"
+        }
+      ],
+      "server": {
+        "local": {},
+        "remote": {
+          "path": "",
+          "port": "",
+          "hostname": "",
+          "host": ""
+        },
+        "advanced": {
+          "allowUnauthorized": false
+        },
+        "sauce": {
+          "dataCenter": "us-west-1"
+        },
+        "headspin": {},
+        "browserstack": {},
+        "lambdatest": {},
+        "testingbot": {},
+        "experitest": {},
+        "roboticmobi": {},
+        "remotetestkit": {},
+        "bitbar": {},
+        "kobiton": {},
+        "perfecto": {},
+        "pcloudy": {},
+        "mobitru": {},
+        "tvlabs": {},
+        "testcribe": {}
+      },
+      "serverType": "remote"
+    },
+    {
+      "date": 1746187355444,
+      "name": "android_withApp",
+      "uuid": "cc4508f5-e929-4de0-a35b-31d69f19aa0e",
+      "caps": [
+        {
+          "type": "text",
+          "value": "Android",
+          "name": "platformName"
+        },
+        {
+          "type": "text",
+          "value": "Pixel_2_API_36",
+          "name": "appium:deviceName"
+        },
+        {
+          "type": "text",
+          "name": "appium:automationName",
+          "value": "UiAutomator2"
+        },
+        {
+          "type": "text",
+          "name": "appium:app",
+          "value": "C:\\mypayments\\msmypaymentsapp-automation\\android\\src\\test\\resources\\apks\\app_noDexguard.apk"
+        },
+        {
+          "type": "number",
+          "name": "appium:avdLaunchTimeout",
+          "value": 120000
+        },
+        {
+          "type": "text",
+          "name": "appium:language",
+          "value": "en"
+        },
+        {
+          "type": "text",
+          "name": "appium:locale",
+          "value": "GB"
+        },
+        {
+          "type": "text",
+          "name": "uiautomator2ServerInstallTimeout",
+          "value": "60000"
+        }
+      ],
+      "server": {
+        "local": {},
+        "remote": {
+          "path": "",
+          "port": "",
+          "hostname": "",
+          "host": ""
+        },
+        "advanced": {
+          "allowUnauthorized": false
+        },
+        "sauce": {
+          "dataCenter": "us-west-1"
+        },
+        "headspin": {},
+        "browserstack": {},
+        "lambdatest": {},
+        "testingbot": {},
+        "experitest": {},
+        "roboticmobi": {},
+        "remotetestkit": {},
+        "bitbar": {},
+        "kobiton": {},
+        "perfecto": {},
+        "pcloudy": {},
+        "mobitru": {},
+        "tvlabs": {},
+        "testcribe": {}
+      },
+      "serverType": "remote"
+    },
+    {
+      "date": 1749196857323,
+      "name": "iOS_withoutApp",
+      "uuid": "256977e8-eb71-4022-b2a1-faf137e3e324",
+      "caps": [
+        {
+          "type": "text",
+          "value": "iOS",
+          "name": "platformName"
+        },
+        {
+          "type": "text",
+          "name": "appium:automationName",
+          "value": "XCUITest"
+        },
+        {
+          "type": "text",
+          "name": "appium:language",
+          "value": "en"
+        },
+        {
+          "type": "text",
+          "name": "appium:locale",
+          "value": "GB"
+        },
+        {
+          "type": "text",
+          "name": "appium:platformVersion",
+          "value": "18.3"
+        },
+        {
+          "type": "text",
+          "name": "appium:deviceName",
+          "value": "iPhone 16 Pro Max"
+        }
+      ],
+      "server": {
+        "local": {},
+        "remote": {
+          "path": "",
+          "port": "",
+          "hostname": "",
+          "host": ""
+        },
+        "advanced": {
+          "allowUnauthorized": false
+        },
+        "sauce": {
+          "dataCenter": "us-west-1"
+        },
+        "headspin": {},
+        "browserstack": {},
+        "lambdatest": {},
+        "testingbot": {},
+        "experitest": {},
+        "roboticmobi": {},
+        "remotetestkit": {},
+        "bitbar": {},
+        "kobiton": {},
+        "perfecto": {},
+        "pcloudy": {},
+        "mobitru": {},
+        "tvlabs": {},
+        "testcribe": {}
+      },
+      "serverType": "remote"
+    },
+    {
+      "date": 1749198473312,
+      "name": "iOS_withApp",
+      "uuid": "92bea24b-dce9-44db-b607-7e21ce3507b9",
+      "caps": [
+        {
+          "type": "text",
+          "value": "iOS",
+          "name": "platformName"
+        },
+        {
+          "type": "text",
+          "name": "appium:automationName",
+          "value": "XCUITest"
+        },
+        {
+          "type": "text",
+          "name": "appium:language",
+          "value": "en"
+        },
+        {
+          "type": "text",
+          "name": "appium:locale",
+          "value": "GB"
+        },
+        {
+          "type": "text",
+          "name": "appium:platformVersion",
+          "value": "18.3"
+        },
+        {
+          "type": "text",
+          "name": "appium:app",
+          "value": "/Users/fcosta/mypayments/msmypaymentsapp-automation/e2e/src/test/resources/ios-apps/MyPayments_Pre-Prod_noIXGuard.app"
+        },
+        {
+          "type": "text",
+          "name": "appium:deviceName",
+          "value": "iPhone 16 Pro Max"
+        }
+      ],
+      "server": {
+        "local": {},
+        "remote": {
+          "path": "",
+          "port": "",
+          "hostname": "",
+          "host": ""
+        },
+        "advanced": {
+          "allowUnauthorized": false
+        },
+        "sauce": {
+          "dataCenter": "us-west-1"
+        },
+        "headspin": {},
+        "browserstack": {},
+        "lambdatest": {},
+        "testingbot": {},
+        "experitest": {},
+        "roboticmobi": {},
+        "remotetestkit": {},
+        "bitbar": {},
+        "kobiton": {},
+        "perfecto": {},
+        "pcloudy": {},
+        "mobitru": {},
+        "tvlabs": {},
+        "testcribe": {}
+      },
+      "serverType": "remote"
+    }
+  ]
+}

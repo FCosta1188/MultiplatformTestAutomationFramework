@@ -1,0 +1,2 @@
+include ':e2e'
+project(':e2e').projectDir = file('e2e')

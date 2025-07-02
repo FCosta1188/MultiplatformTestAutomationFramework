@@ -1,0 +1,355 @@
+package eu.nets.test.flows.Registration;
+
+import eu.nets.test.core.AbstractFlow;
+import eu.nets.test.core.enums.AndroidSnapshot;
+import eu.nets.test.core.enums.MpaLanguage;
+import eu.nets.test.core.exceptions.UnsupportedPlatformException;
+import eu.nets.test.flows.data.models.MpaUser;
+import eu.nets.test.util.EnvUtil;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import io.qameta.allure.junit5.AllureJunit5;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+
+import static eu.nets.test.core.enums.AndroidSnapshot.MPA_LOGGED_OUT;
+import static eu.nets.test.core.enums.MpaWidget.ACCEPT_TERMS_SWITCH;
+import static eu.nets.test.core.enums.MpaWidget.ALLOW_NOTIFICATIONS_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.CODE_SENT_OK_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.CONTINUE_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.COUNTRY_SPINNER;
+import static eu.nets.test.core.enums.MpaWidget.EMAIL_INPUT;
+import static eu.nets.test.core.enums.MpaWidget.GET_HELP_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.INSERT_VAT_CONTINUE_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.IOS_SOFTWARE_KEYBOARD_DONE_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.LOGIN_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.OTP_INPUT;
+import static eu.nets.test.core.enums.MpaWidget.PIN_INPUT;
+import static eu.nets.test.core.enums.MpaWidget.REQUEST_ACCESS_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.RESEND_CODE_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.SECTION_TITLE;
+import static eu.nets.test.core.enums.MpaWidget.SEE_DATA_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.SELECT_COUNTRY_CONTINUE_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.SET_PIN_INPUT;
+import static eu.nets.test.core.enums.MpaWidget.SKIP_GET_STARTED_CLOSE_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.SPINNER_COUNTRY_NAME;
+import static eu.nets.test.core.enums.MpaWidget.SPINNER_COUNTRY_SCROLLBAR;
+import static eu.nets.test.core.enums.MpaWidget.TERMINAL_SETUP_SKIP_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.VAT_INPUT;
+import static eu.nets.test.util.AllureUtil.logError;
+import static eu.nets.test.util.AllureUtil.logInfo;
+import static eu.nets.test.util.MailUtil.getOtp;
+
+@ExtendWith(AllureJunit5.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class RegistrationCvrFlow extends AbstractFlow {
+    private final int WAIT_10_S = 10;
+    private final int WAIT_20_S = 20;
+    private final int WAIT_30_S = 30;
+    private final int WAIT_40_S = 40;
+
+    @Override
+    public AndroidSnapshot startupAndroidSnapshot() {
+        if (EnvUtil.isAndroid()) {
+            return MPA_LOGGED_OUT;
+        } else if (EnvUtil.isIos()) {
+            return null;
+        } else {
+            throw new UnsupportedPlatformException();
+        }
+    }
+
+    @Override
+    public String flowClassName() {
+        return "RegistrationCvrFlow";
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}, {1}")
+    @MethodSource("eu.nets.test.flows.data.Registration.RegistrationCvrData#stream")
+    @Epic("Registration with CVR")
+    @Feature("https://nexigroup-germany.atlassian.net/browse/MSA-6158")
+    @Story("First login with different types of CVR credentials")
+    @Description("Login to the app for the first time with a VAT number, setup a PIN and land on Overview")
+    protected void runTest(
+            MpaUser user,
+            MpaLanguage appLanguage
+    ) {
+        run(user, appLanguage, true, true);
+    }
+
+    public void run(
+            MpaUser user,
+            MpaLanguage appLanguage,
+            boolean testInAppPin,
+            boolean testResendOtp
+    ) {
+        Allure.step("Launch driver and set system language: " + appLanguage, () -> {
+            if (appLanguage != null) {
+                launchDriver(false, appLanguage.getLanguage(), appLanguage.getCountry());
+            }
+        });
+
+        if (EnvUtil.isIos()) {
+            Allure.step("[iOS specific]: install MPA", () -> {
+                driver.installMpa();
+            });
+        }
+
+        Allure.step("Restart MPA - clearAppData: true", () -> {
+            driver.restartMpa(true, WAIT_30_S);
+        });
+
+        if (EnvUtil.isIos()) {
+            Allure.step("[iOS Specific]: Allow notifications (if applicable)");
+            try {
+                if (EnvUtil.isAndroid()) {
+                    driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON, WAIT_10_S);
+                } else if (EnvUtil.isIos()) {
+                    driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON.byIosXpathWithName(appLanguage.capitalize("allow")), WAIT_10_S);
+                } else {
+                    throw new UnsupportedPlatformException();
+                }
+            } catch (Exception skipElement) {
+                logInfo("Element \"" + ALLOW_NOTIFICATIONS_BUTTON + "\" not found -> SKIPPED");
+            }
+        }
+
+        Allure.step("Tap LOG IN (if applicable)", () -> {
+            try {
+                driver.safeClick(LOGIN_BUTTON, WAIT_20_S);
+            } catch (Exception skipElement) {
+                logInfo("Element \"" + LOGIN_BUTTON + "\" not found -> SKIPPED");
+            }
+        });
+
+        Allure.step("Insert username and tap CONTINUE: " + user.email(), () -> {
+            driver.safeSendKeys(EMAIL_INPUT, WAIT_10_S, user.email());
+            driver.safeClick(CONTINUE_BUTTON, WAIT_10_S);
+        });
+
+        Allure.step("Tap GET HELP SIGNING IN", () -> {
+            driver.safeClick(GET_HELP_BUTTON, WAIT_10_S);
+        });
+
+        Allure.step("Select country and tap CONTINUE: " + user.country(), () -> {
+            if (EnvUtil.isAndroid()) {
+                WebElement countrySpinner = driver.safeClick(COUNTRY_SPINNER, WAIT_10_S);
+                driver.scrollToText(countrySpinner, "down", user.country());
+                driver.safeClick(SPINNER_COUNTRY_NAME.byAndroidXpathWithResourceIdAndAttribute("text", user.country()), WAIT_10_S);
+            } else if (EnvUtil.isIos()) {
+                driver.safeClick(SPINNER_COUNTRY_NAME.byIosXpathWithName("Denmark"), WAIT_10_S);
+
+                boolean countryFound = false;
+                int j;
+                for (j = 1; j <= 3; j++) {
+                    try {
+                        driver.safeClick(SPINNER_COUNTRY_NAME.byIosXpathWithName(user.country()), WAIT_10_S);
+                        countryFound = true;
+                        break;
+                    } catch (Exception e) {
+                        logInfo("Country not found, trying swipe up 50% - retry #" + j);
+                        driver.swipePercent(driver.findElement(SPINNER_COUNTRY_SCROLLBAR.byIosAccessibilityId()), "up", 50);
+                    }
+                }
+
+                if (!countryFound) {
+                    throw new IllegalStateException(logError("Country not found after 3 swipe attempts: " + user.country()));
+                }
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+
+            driver.safeClick(SELECT_COUNTRY_CONTINUE_BUTTON, WAIT_10_S);
+        });
+
+        Allure.step("Insert VAT and tap CONTINUE: " + user.vat(), () -> {
+            if (EnvUtil.isAndroid()) {
+                driver.safeSendKeys(VAT_INPUT, WAIT_10_S, user.vat());
+            } else if (EnvUtil.isIos()) {
+                try {
+                    driver.safeSendKeys(VAT_INPUT.byIosXpathWithValue("Business partner ID here"), WAIT_10_S, user.vat());
+                } catch (Exception e) {
+                    logInfo(VAT_INPUT + " not found by value \"Business partner ID here\" -> trying value \"Company VAT number here\"");
+                    driver.safeSendKeys(VAT_INPUT.byIosXpathWithValue("Company VAT number here"), WAIT_10_S, user.vat());
+                }
+                try {
+                    driver.safeClick(IOS_SOFTWARE_KEYBOARD_DONE_BUTTON, WAIT_10_S);
+                } catch (Exception e) {
+                    logInfo(IOS_SOFTWARE_KEYBOARD_DONE_BUTTON + " not found -> SKIPPED");
+                }
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+
+            driver.safeClick(INSERT_VAT_CONTINUE_BUTTON, WAIT_10_S);
+        });
+
+        Allure.step("Tap REQUEST ACCESS", () -> {
+            if (EnvUtil.isAndroid()) {
+                driver.safeClick(REQUEST_ACCESS_BUTTON, WAIT_40_S);
+            } else if (EnvUtil.isIos()) {
+                driver.safeClick(REQUEST_ACCESS_BUTTON.byIosXpathWithLabel(), WAIT_40_S);
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+        });
+
+        Allure.step("Insert OTP - test resend code: " + testResendOtp, () -> {
+            String otp = getOtp(user, GMAIL_APP_PSW, true);
+
+            if (testResendOtp) {
+                if (EnvUtil.isAndroid()) {
+                    driver.safeClick(RESEND_CODE_BUTTON, WAIT_10_S);
+                } else if (EnvUtil.isIos()) {
+                    driver.safeClick(RESEND_CODE_BUTTON.byIosXpathWithNameAndIndex("Resend code", 2), WAIT_10_S);
+                } else {
+                    throw new UnsupportedPlatformException();
+                }
+
+                otp = getOtp(user, GMAIL_APP_PSW, true);
+                driver.safeClick(CODE_SENT_OK_BUTTON, WAIT_10_S);
+            }
+
+            if (EnvUtil.isAndroid()) {
+                driver.safeSendKeys(OTP_INPUT, WAIT_40_S, otp);
+            } else if (EnvUtil.isIos()) {
+                for (int i = 1; i <= 6; i++) {
+                    driver.safeSendKeys(
+                            OTP_INPUT.byXpath(
+                                    "//XCUIElementTypeApplication[@name=\"MyPayments " +
+                                            "Pre-Prod\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2" +
+                                            "]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther" +
+                                            "/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther" +
+                                            "/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther" +
+                                            "/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField" +
+                                            "[" + i + "]"),
+                            WAIT_40_S,
+                            String.valueOf(otp.toCharArray()[i - 1])
+                    );
+                }
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+        });
+
+        Allure.step("Choose PIN", () -> {
+            driver.safeSendKeys(SET_PIN_INPUT, WAIT_10_S, APP_PIN);
+        });
+
+        Allure.step("Confirm PIN", () -> {
+            EnvUtil.safeSleep(2000);
+            driver.safeSendKeys(SET_PIN_INPUT, WAIT_10_S, APP_PIN);
+        });
+
+        Allure.step("Select location(s), accept terms and tap SEE DATA: " + user.org(), () -> {
+            EnvUtil.safeSleep(5000);
+
+            List<WebElement> visibleCheckboxes;
+            if (EnvUtil.isAndroid()) {
+                visibleCheckboxes = driver.findElements(By.xpath(".//android.widget.CheckBox"));
+            } else if (EnvUtil.isIos()) {
+                visibleCheckboxes = driver.findElements(By.xpath(".//XCUIElementTypeCell"));
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+
+            if (visibleCheckboxes.isEmpty()) {
+                throw new NoSuchElementException("No outlets found for org: " + user.org());
+            } else if (visibleCheckboxes.size() == 1) {
+                if (EnvUtil.isAndroid()) {
+                    visibleCheckboxes.get(0).click();
+                }
+            } else {
+                if (EnvUtil.isAndroid()) {
+                    visibleCheckboxes.get(0).click();
+                } else if (EnvUtil.isIos()) {
+                    driver.safeClick(By.xpath("//XCUIElementTypeTable[@name=\"setup_table_view\"]/XCUIElementTypeCell[1]"), WAIT_10_S);
+                } else {
+                    throw new UnsupportedPlatformException();
+                }
+            }
+
+            driver.safeClick(ACCEPT_TERMS_SWITCH, WAIT_10_S);
+            driver.safeClick(SEE_DATA_BUTTON, WAIT_10_S);
+        });
+
+        Allure.step("Tap I DON'T NEED TO SETUP TERMINALS (if applicable)", () -> {
+            try {
+                driver.safeClick(TERMINAL_SETUP_SKIP_BUTTON, WAIT_10_S);
+                logInfo("Element not found: " + TERMINAL_SETUP_SKIP_BUTTON + "\n\t-> SKIPPED");
+            } catch (Exception elementFound) {
+                driver.safeClick(TERMINAL_SETUP_SKIP_BUTTON, WAIT_10_S);
+            }
+        });
+
+        Allure.step("Skip Get Started (if applicable)", () -> {
+            try {
+                driver.safeClick(SKIP_GET_STARTED_CLOSE_BUTTON, WAIT_10_S);
+            } catch (Exception skipElement) {
+                logInfo("Element \"" + SKIP_GET_STARTED_CLOSE_BUTTON + "\" not found -> SKIPPED");
+            }
+        });
+
+        if (EnvUtil.isAndroid()) {
+            Allure.step("[Android Specific] Allow notifications (if applicable)", () -> {
+                try {
+                    driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON, WAIT_10_S);
+                } catch (Exception skipElement) {
+                    logInfo("Element with id \"" + ALLOW_NOTIFICATIONS_BUTTON.getAndroidResourceId() + "\" not found -> SKIPPED");
+                }
+            });
+        }
+
+        Allure.step("Land on Overview - test in-app PIN: " + testInAppPin, () -> {
+            if (EnvUtil.isAndroid()) {
+                assert driver.waitUntilElementVisible(SECTION_TITLE, WAIT_10_S).getText().equals("MyPayments");
+            } else if (EnvUtil.isIos()) {
+                driver.waitUntilElementVisible(SECTION_TITLE.byIosXpathWithName("MyPayments"), WAIT_10_S);
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+
+            if (testInAppPin) {
+                driver.restartMpa(false, WAIT_30_S);
+
+                if (EnvUtil.isAndroid()) {
+                    driver.safeSendKeys(PIN_INPUT, WAIT_10_S, APP_PIN);
+                    assert driver.waitUntilElementVisible(SECTION_TITLE, WAIT_10_S).getText().equals("MyPayments");
+                } else if (EnvUtil.isIos()) {
+                    for (int i = 1; i <= APP_PIN.length(); i++) {
+                        driver.safeSendKeys(
+                                PIN_INPUT.byXpath(
+                                        "//XCUIElementTypeApplication[@name=\"MyPayments " +
+                                                "Pre-Prod\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther" +
+                                                "/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther" +
+                                                "/XCUIElementTypeSecureTextField[" + i + "]"),
+                                WAIT_10_S,
+                                String.valueOf(APP_PIN.charAt(i - 1))
+                        );
+                    }
+                    driver.waitUntilElementVisible(SECTION_TITLE.byIosXpathWithName("MyPayments"), WAIT_10_S);
+                } else {
+                    throw new UnsupportedPlatformException();
+                }
+            }
+        });
+
+        if (EnvUtil.isAndroid()) {
+            Allure.step("[Android specific]: save snapshot: " + user.loggedInAndroidSnapshot(), () -> {
+                if (!user.loggedInAndroidSnapshot().exists()) {
+                    user.loggedInAndroidSnapshot().save();
+                }
+            });
+        }
+    }
+}
