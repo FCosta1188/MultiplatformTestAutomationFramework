@@ -23,11 +23,13 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static eu.nets.test.core.enums.AndroidSnapshot.MPA_LOGGED_OUT;
+import static eu.nets.test.core.enums.AndroidSnapshot.NO_MPA;
 import static eu.nets.test.core.enums.MpaWidget.ACCEPT_TERMS_SWITCH;
 import static eu.nets.test.core.enums.MpaWidget.ALLOW_NOTIFICATIONS_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.CODE_SENT_OK_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.CONTINUE_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.EMAIL_INPUT;
+import static eu.nets.test.core.enums.MpaWidget.IOS_UPDATE_APP_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.LOGIN_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.OTP_INPUT;
 import static eu.nets.test.core.enums.MpaWidget.PIN_INPUT;
@@ -43,7 +45,7 @@ import static eu.nets.test.util.MailUtil.getOtp;
 
 @ExtendWith(AllureJunit5.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RegistrationFlow extends AbstractFlow {
+public class  RegistrationFlow extends AbstractFlow {
     private final int WAIT_5_S = 5;
     private final int WAIT_10_S = 10;
     private final int WAIT_20_S = 20;
@@ -53,17 +55,12 @@ public class RegistrationFlow extends AbstractFlow {
     @Override
     public AndroidSnapshot startupAndroidSnapshot() {
         if (EnvUtil.isAndroid()) {
-            return MPA_LOGGED_OUT;
+            return NO_MPA;
         } else if (EnvUtil.isIos()) {
             return null;
         } else {
             throw new UnsupportedPlatformException();
         }
-    }
-
-    @Override
-    public String flowClassName() {
-        return "RegistrationFlow";
     }
 
     @ParameterizedTest(name = "[{index}] {0}, {1}")
@@ -88,6 +85,8 @@ public class RegistrationFlow extends AbstractFlow {
         Allure.step("Launch driver and set system language: " + appLanguage, () -> {
             if (appLanguage != null) {
                 launchDriver(false, appLanguage.getLanguage(), appLanguage.getCountry());
+            } else {
+                throw new RuntimeException("Unable to launch driver due to: appLanguage is null");
             }
         });
 
@@ -96,31 +95,54 @@ public class RegistrationFlow extends AbstractFlow {
         });
 
         if (EnvUtil.isIos()) {
-            Allure.step("[iOS Specific]: Allow notifications (if applicable)");
+            Allure.step("[iOS specific]: Allow notifications (if applicable), UPDATE (if applicable)");
             try {
-                if (EnvUtil.isAndroid()) {
-                    driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON, WAIT_10_S);
-                } else if (EnvUtil.isIos()) {
-                    driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON.byIosXpathWithName(appLanguage.capitalize("allow")), WAIT_10_S);
-                } else {
-                    throw new UnsupportedPlatformException();
-                }
-            } catch (Exception skipElement) {
+                driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON.byIosXpathWithName(appLanguage.capitalizeDictionaryEntry("allow", false)), WAIT_10_S);
+            } catch (Exception skipOptionalElement) {
                 logInfo("Element \"" + ALLOW_NOTIFICATIONS_BUTTON + "\" not found -> SKIPPED");
+            }
+
+            try {
+                WebElement iosUpdateAppButton = driver.findElement(IOS_UPDATE_APP_BUTTON.byIosXpathWithName());
+                iosUpdateAppButton.click();
+            } catch (NoSuchElementException skipOptionalElement) {
+                logInfo("Element \"" + IOS_UPDATE_APP_BUTTON + "\" not found -> SKIPPED");
             }
         }
 
         Allure.step("Tap LOG IN (if applicable)", () -> {
             try {
-                driver.safeClick(LOGIN_BUTTON, WAIT_20_S);
+                if (EnvUtil.isAndroid()) {
+                    driver.safeClick(LOGIN_BUTTON, WAIT_10_S);
+                } else if (EnvUtil.isIos()) {
+                    driver.safeClick(LOGIN_BUTTON.byIosXpathWithName(appLanguage.capitalizeDictionaryEntry("log in", false)), WAIT_10_S);
+                } else {
+                    throw new UnsupportedPlatformException();
+                }
             } catch (Exception skipElement) {
                 logInfo("Element \"" + LOGIN_BUTTON + "\" not found -> SKIPPED");
             }
         });
 
         Allure.step("Insert username and tap CONTINUE: " + user.email(), () -> {
-            driver.safeSendKeys(EMAIL_INPUT, WAIT_10_S, user.email());
-            driver.safeClick(CONTINUE_BUTTON, WAIT_10_S);
+            WebElement emailInput = driver.safeSendKeys(EMAIL_INPUT, WAIT_10_S, user.email());
+            WebElement continueButton = driver.safeClick(CONTINUE_BUTTON, WAIT_10_S);
+
+            //TODO: remove workaround below when fix is released (ISSUE: currently, the email page might reappear after clicking CONTINUE)
+            boolean isEmailInputStale = false;
+            if(EnvUtil.isAndroid()) {
+                isEmailInputStale = driver.waitUntilElementStaleness(emailInput, WAIT_10_S);
+            } else if (EnvUtil.isIos()) {
+                isEmailInputStale = driver.waitUntilElementStaleness(emailInput, WAIT_10_S);
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+
+            if(!isEmailInputStale) {
+                logInfo("Elements \"" + EMAIL_INPUT + "and" + CONTINUE_BUTTON + "\" still visible -> RETRYING once");
+                driver.safeSendKeys(EMAIL_INPUT, WAIT_10_S, user.email());
+                driver.safeClick(CONTINUE_BUTTON, WAIT_10_S);
+            }
         });
 
         Allure.step("Insert OTP - test resend code: " + testResendOtp, () -> {
@@ -238,7 +260,7 @@ public class RegistrationFlow extends AbstractFlow {
         }
 
         if (EnvUtil.isAndroid()) {
-            Allure.step("[Android Specific] Allow notifications (if applicable)", () -> {
+            Allure.step("[Android specific]: Allow notifications (if applicable)", () -> {
                 try {
                     driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON, WAIT_10_S);
                 } catch (Exception skipElement) {

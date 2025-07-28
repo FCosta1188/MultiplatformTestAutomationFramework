@@ -17,8 +17,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -56,7 +54,6 @@ import static eu.nets.test.util.EnvUtil.startupIosSimulator;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractFlow {
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractFlow.class);
     protected AppiumDriverLocalService service = getAppiumServer(PropertiesUtil.CONFIG.getProperty("appium.server.args"));
     protected MpaDriver driver;
     protected Map<MpaLanguage, Map<String, String>> lokaliseBundle;
@@ -64,6 +61,7 @@ public abstract class AbstractFlow {
     protected static Path reportDir;
 
     protected final String APP_PIN = PropertiesUtil.MPA.getProperty("app.pin");
+    protected final String APP_PIN_CHANGE = PropertiesUtil.MPA.getProperty("app.pin.change");
     protected final String GMAIL_APP_PSW = PropertiesUtil.MPA.getProperty("mail.appPsw.main.gmail");
 
     @RegisterExtension
@@ -79,8 +77,6 @@ public abstract class AbstractFlow {
      * @return il nome dello snapshot dell'emulatore
      */
     public abstract AndroidSnapshot startupAndroidSnapshot();
-
-    public abstract String flowClassName();
 
     public MpaDriver getDriver() {
         return driver;
@@ -125,7 +121,7 @@ public abstract class AbstractFlow {
                         this.driver = new MpaIosDriver(200, setAppiumApp, language, locale);
                     } catch (Exception e) {
                         logError("Error launching iOS driver - retry #" + retries + ": " + e.getMessage());
-                        EnvUtil.safeSleep(3000);
+                        EnvUtil.safeSleep(5000);
                     }
                 }
             } else {
@@ -153,7 +149,7 @@ public abstract class AbstractFlow {
             throw new UnsupportedPlatformException();
         }
 
-        reportDir = AllureUtil.createCustomReportFolder(flowClassName());
+        reportDir = AllureUtil.createCustomReportFolder(this.getClass().getSimpleName());
 
         //        try{
         //            LokaliseUtil.downloadBundle(true);
@@ -174,30 +170,36 @@ public abstract class AbstractFlow {
 
     @BeforeEach
     protected void beforeEach() {
-        EnvUtil.safeSleep(5000);
+        EnvUtil.safeSleep(20000);
     }
 
     @AfterEach
     protected void afterEach() {
         Allure.step("Quit driver", () -> {
-            if (driver != null) {
+            if (this.driver != null) {
                 try {
-                    driver.quit();
+                    this.driver.quit();
                 } catch (Exception e) {
-                    logError("Error while quitting driver: " + e.getMessage());
+                    logError("Driver quit failed: " + e.getMessage());
+                } finally {
+                    this.driver = null;
                 }
-                driver = null;
             }
         });
 
-        EnvUtil.safeSleep(5000);
+        EnvUtil.safeSleep(20000);
     }
 
     @AfterAll
     protected void afterAll() throws IOException, InterruptedException {
         if (this.driver != null) {
-            this.driver.quit();
-            this.driver = null;
+            try {
+                this.driver.quit();
+            } catch (Exception e) {
+                logError("Driver quit failed: " + e.getMessage());
+            } finally {
+                this.driver = null;
+            }
         }
 
         if (this.service.isRunning()) {

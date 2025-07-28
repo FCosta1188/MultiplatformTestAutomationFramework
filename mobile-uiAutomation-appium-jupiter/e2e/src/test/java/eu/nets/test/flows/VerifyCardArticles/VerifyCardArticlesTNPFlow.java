@@ -25,11 +25,6 @@ public class VerifyCardArticlesTNPFlow extends AbstractFlow {
         return AndroidSnapshot.MPA_LOGGED_IN_TNP11;
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyMpaCardArticlesTNPFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}, {2}")
     @MethodSource("eu.nets.test.flows.data.VerifyCardArticles.VerifyCardArticlesData#streamTNP")
     @Epic("Verify cards and related articles")

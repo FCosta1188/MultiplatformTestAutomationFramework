@@ -25,11 +25,6 @@ public class VerifyCardArticlesBAUFlow extends AbstractFlow {
         return AndroidSnapshot.MPA_LOGGED_IN_BAU;
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyMpaCardArticlesBAUFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}, {2}")
     @MethodSource("eu.nets.test.flows.data.VerifyCardArticles.VerifyCardArticlesData#streamBAU")
     @Epic("Verify cards and related articles")

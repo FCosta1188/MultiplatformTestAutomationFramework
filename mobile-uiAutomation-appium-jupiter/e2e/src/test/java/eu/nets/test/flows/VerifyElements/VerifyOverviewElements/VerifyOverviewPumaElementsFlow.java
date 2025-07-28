@@ -43,11 +43,6 @@ public class VerifyOverviewPumaElementsFlow extends AbstractFlow {
         }
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyOverviewPumaElementsFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0} {1}")
     @MethodSource("eu.nets.test.flows.data.VerifyElements.VerifyOverviewElements.VerifyPumaElementsData#streamPumaAccount")
     @Epic("Verify PUMA Overview Elements")

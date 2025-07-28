@@ -1,5 +1,20 @@
 {
-  "allow": "",
+  "allow": "autoriser",
+  "confirm": "confirmer",
+  "default": "défaut",
+  "log in": "se connecter",
+
+  "danish": "danois",
   "english": "anglais",
-  "french": "français"
+  "estonian": "estonien",
+  "finnish": "finnois",
+  "french": "français",
+  "german": "allemand",
+  "italian": "italien",
+  "latvian": "letton",
+  "lithuanian": "lituanien",
+  "norwegian": "norvégien bokmål",
+  "polish": "polonais",
+  "spanish": "espagnol",
+  "swedish": "suédois"
 }

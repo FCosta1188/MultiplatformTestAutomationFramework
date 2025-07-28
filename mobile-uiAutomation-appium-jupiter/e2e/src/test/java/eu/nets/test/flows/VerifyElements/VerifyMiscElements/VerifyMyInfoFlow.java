@@ -54,11 +54,6 @@ public class VerifyMyInfoFlow extends AbstractFlow {
         }
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyMyInfoFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}")
     @MethodSource("eu.nets.test.flows.data.VerifyElements.VerifyMiscElements.VerifyMyInfoData#stream")
     @Epic("")

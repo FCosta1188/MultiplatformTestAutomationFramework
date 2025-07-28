@@ -36,12 +36,24 @@ public final class EnvUtil {
         return OS.toLowerCase().contains("windows");
     }
 
-    public static boolean isMacOs() {
+    public static boolean isWin32() {
+        return OS_ARCH.equalsIgnoreCase("x86");
+    }
+
+    public static boolean isWin64() {
+        return OS_ARCH.equalsIgnoreCase("amd64");
+    }
+
+    public static boolean isMac() {
         return OS.toLowerCase().contains("mac os x");
     }
 
-    public static boolean isAppleSilicon() {
-        return OS_ARCH.equalsIgnoreCase("aarch64");
+    public static boolean isMacIntel() {
+        return OS_ARCH.equalsIgnoreCase("x86_64");
+    }
+
+    public static boolean isMacAppleSilicon() {
+        return OS_ARCH.equalsIgnoreCase("aarch64") || OS_ARCH.equalsIgnoreCase("arm64");
     }
 
     public static boolean isAndroid() {
@@ -71,8 +83,8 @@ public final class EnvUtil {
         if (isWin()) {
             args.add("-gpu");
             args.add("on");
-        } else if (isMacOs()) {
-            if (isAppleSilicon()) { //ARM Mac
+        } else if (isMac()) {
+            if (isMacAppleSilicon()) { //ARM Mac
                 args.add("-gpu");
                 args.add("swiftshader_indirect"); // Compatibile with M1/M2/M3
                 args.add("-accel");
@@ -124,7 +136,7 @@ public final class EnvUtil {
     }
 
     private static void setProcessBuilderEnv(ProcessBuilder processBuilder) {
-        if (isMacOs()) {
+        if (isMac()) {
             processBuilder.environment().putAll(getMacOsEnv());
         }
     }
@@ -216,7 +228,7 @@ public final class EnvUtil {
     }
 
     public static void startupIosSimulator() throws IOException {
-        if (!isMacOs()) {
+        if (!isMac()) {
             throw new UnsupportedOperationException("iOS Simulator is only supported on MacOS.");
         }
 
@@ -230,7 +242,7 @@ public final class EnvUtil {
     }
 
     public static void shutdownIosSimulator() throws IOException {
-        if (!isMacOs()) {
+        if (!isMac()) {
             throw new UnsupportedOperationException("iOS Simulator is only supported on MacOS.");
         }
 
@@ -241,7 +253,7 @@ public final class EnvUtil {
     }
 
     private static AppiumServiceBuilder getAppiumServiceBuilder() {
-        if (isMacOs()) {
+        if (isMac()) {
             return new AppiumServiceBuilder()
                     .withAppiumJS(PathKey.APPIUM_SERVER.resolve().asFile())
                     .usingPort(Integer.parseInt(PropertiesUtil.CONFIG.getProperty("appium.server.port")))
@@ -290,7 +302,12 @@ public final class EnvUtil {
             caps.setCapability("uiautomator2ServerInstallTimeout", 1000 * waitS);
             caps.setCapability("adbExecTimeout", 1000 * waitS);
             caps.setCapability("avdReadyTimeout", 1000 * waitS);
+            caps.setCapability("androidDeviceReadyTimeout", 1000 * waitS);
             caps.setCapability("appium:avdLaunchTimeout", 1000 * waitS);
+            caps.setCapability("chromedriverExecutable", PathKey.CHROME_DRIVER.resolve().asString());
+            //caps.setCapability("chromedriverAutodownload", true);
+            //caps.setCapability("noReset", PropertiesUtil.CONFIG.getProperty("appium.driver.caps.noReset"));
+            //caps.setCapability("fullReset", PropertiesUtil.CONFIG.getProperty("appium.driver.caps.fullReset"));
         }
         caps.setCapability("platformName", PropertiesUtil.ENV.getProperty("PLATFORM"));
         caps.setCapability("appium:automationName", PropertiesUtil.ENV.getProperty("automationName"));
@@ -299,8 +316,8 @@ public final class EnvUtil {
         caps.setCapability("appWaitForLaunch", PropertiesUtil.CONFIG.getProperty("appium.driver.caps.appWaitForLaunch"));
         caps.setCapability("appWaitDuration", 1000 * waitS);
         caps.setCapability("disableWindowAnimation", PropertiesUtil.CONFIG.getProperty("appium.driver.caps.disableWindowAnimation"));
-        caps.setCapability("language", MpaLanguage.DEFAULT.getLanguage());
-        caps.setCapability("locale", MpaLanguage.DEFAULT.getCountry());
+        caps.setCapability("language", MpaLanguage.FALLBACK.getLanguage());
+        caps.setCapability("locale", MpaLanguage.FALLBACK.getCountry());
 
         return caps;
     }

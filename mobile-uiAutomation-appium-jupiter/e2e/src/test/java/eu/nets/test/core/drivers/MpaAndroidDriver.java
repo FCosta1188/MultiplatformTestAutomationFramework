@@ -51,7 +51,7 @@ public class MpaAndroidDriver extends AndroidDriver implements MpaDriver, TestWa
 
     public static final String MPA_APP_ID = PropertiesUtil.ENV.getProperty("mpaAppId"); // bundleId
     public static final Path MPA_APK_DIR = PathKey.MPA.resolve().asPath();
-    public static final int SLEEP_MS = 1000;
+    public static final int SLEEP_MS = 500;
 
     public MpaAndroidDriver(int waitS, boolean setAppiumApp) throws MalformedURLException {
         super(
@@ -72,6 +72,22 @@ public class MpaAndroidDriver extends AndroidDriver implements MpaDriver, TestWa
         String appContext = this.getContext();
         assert appContext != null;
         return appContext.equals("NATIVE_APP");
+    }
+
+    @Override
+    public void switchAppContext(String appContext) {
+        try {
+            new WebDriverWait(this, Duration.ofSeconds(10)).until(d -> this.getContextHandles().size() > 1);
+        } catch (TimeoutException e) {
+            throw new IllegalStateException(logError("No additional app contexts found (NATIVE_APP only) - waited 10 seconds: " + e.getMessage()));
+        }
+
+        Set<String> contexts = this.getContextHandles();
+        if(contexts.contains(appContext)) {
+            this.context(appContext);
+        } else {
+            throw new IllegalArgumentException(logError("App context not found: " + appContext + " - Available contexts: " + contexts));
+        }
     }
 
     @Override

@@ -1,0 +1,20 @@
+{
+  "allow": "leisti",
+  "confirm": "patvirtinti",
+  "default": "numatytoji",
+  "log in": "prisijungti",
+
+  "danish": "danų",
+  "english": "anglų",
+  "estonian": "estų",
+  "finnish": "suomių",
+  "french": "prancūzų",
+  "german": "vokiečių",
+  "italian": "italų",
+  "latvian": "latvių",
+  "lithuanian": "lietuvių",
+  "norwegian": "norvegų bukmolas",
+  "polish": "lenkų",
+  "spanish": "ispanų",
+  "swedish": "švedų"
+}

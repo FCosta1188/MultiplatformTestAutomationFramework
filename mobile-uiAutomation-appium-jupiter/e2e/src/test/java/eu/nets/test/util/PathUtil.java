@@ -18,10 +18,9 @@ import static eu.nets.test.util.AllureUtil.logInfo;
 
 @Deprecated
 public final class PathUtil {
-    public static final String MPA_APK_FILENAME = "mpa_noDexguard.apk";
-    public static final String MPA_APP_FILENAME = "MyPayments Pre-Prod.app";
-    public static final String IO_APPIUM_SETTINGS_V5_APK_FILENAME = "io-appium-settings_apk-debug_v5-14-5.apk";
-    public static final String IO_APPIUM_SETTINGS_V2_APK_FILENAME = "io-appium-settings_apk-debug_v2-16-2.apk";
+    public static final String MPA_APK_FILENAME = "mpa.apk";
+    public static final String MPA_APP_FILENAME = "mpa.app";
+    public static final String IO_APPIUM_SETTINGS_APK_FILENAME = "io-appium-settings_apk-debug.apk";
 
     public static final String SEPARATOR = File.separator;
     public static final Path E2E_MODULE_PATH = Paths.get(".." + SEPARATOR + "e2e");
@@ -49,7 +48,7 @@ public final class PathUtil {
 
     public static PathHolder get(String pathName) {
         Path baseDir;
-        if (EnvUtil.isWin() || EnvUtil.isMacOs()) {
+        if (EnvUtil.isWin() || EnvUtil.isMac()) {
             baseDir = E2E_MODULE_PATH;
         } else {
             throw new UnupportedOsException();
@@ -61,7 +60,7 @@ public final class PathUtil {
                 path = getAppiumMainjsFilepath();
                 break;
             case "adb": //paths to adb executable only, no folders
-                if (EnvUtil.isMacOs()) {
+                if (EnvUtil.isMac()) {
                     path = Paths.get(System.getProperty("user.home"), "Library/Android/sdk/platform-tools/adb");
                 } else if (EnvUtil.isWin()) {
                     path = Paths.get("adb"); //if adb is in PATH, just use "adb"
@@ -70,7 +69,7 @@ public final class PathUtil {
                 }
                 break;
             case "emulator": //paths to android emulator executable only, no folders
-                if (EnvUtil.isMacOs()) {
+                if (EnvUtil.isMac()) {
                     path = Paths.get(System.getProperty("user.home"), "Library/Android/sdk/emulator/emulator");
                 } else if (EnvUtil.isWin()) {
                     path = Paths.get("emulator"); //if emulator is in PATH, just use "emulator"
@@ -87,11 +86,8 @@ public final class PathUtil {
                     throw new UnsupportedPlatformException();
                 }
                 break;
-            case "ioAppiumSettingsApkV5":
-                path = baseDir.resolve(Paths.get("src", "test", "resources", "android-apks", IO_APPIUM_SETTINGS_V5_APK_FILENAME));
-                break;
-            case "ioAppiumSettingsApkV2":
-                path = baseDir.resolve(Paths.get("src", "test", "resources", "android-apks", IO_APPIUM_SETTINGS_V2_APK_FILENAME));
+            case "ioAppiumSettings":
+                path = baseDir.resolve(Paths.get("src", "test", "resources", "android-apks", IO_APPIUM_SETTINGS_APK_FILENAME));
                 break;
             case "img":
                 path = baseDir.resolve(Paths.get("src", "test", "resources", "img"));
@@ -106,7 +102,7 @@ public final class PathUtil {
                 path = baseDir.resolve(Paths.get("src", "test", "resources", "reports"));
                 break;
             case "lokaliseBundle":
-                path = baseDir.resolve(Paths.get(PropertiesUtil.MPA.getProperty("lokalise.bundle.dir").replace("|", SEPARATOR)));
+                path = baseDir.resolve(Paths.get(PropertiesUtil.CONFIG.getProperty("lokalise.bundle.dir").replace("|", SEPARATOR)));
                 break;
 
             default:
@@ -130,7 +126,7 @@ public final class PathUtil {
             );
 
             fallbackPathString = PropertiesUtil.CONFIG.getProperty("appium.mainjs.win");
-        } else if (EnvUtil.isMacOs()) {
+        } else if (EnvUtil.isMac()) {
             // Common MacOS paths: Apple Silicon, Intel, NVM, Yarn
             candidatePaths.add("/opt/homebrew/lib/node_modules/appium/build/lib/main.js");
             candidatePaths.add("/usr/local/lib/node_modules/appium/build/lib/main.js");

@@ -1,5 +1,20 @@
 {
-  "allow": "",
+  "allow": "tillad",
+  "confirm": "bekræft",
+  "default": "standard",
+  "log in": "log på",
+
   "danish": "dansk",
-  "english": "engelsk"
+  "english": "engelsk",
+  "estonian": "estisk",
+  "finnish": "finsk",
+  "french": "fransk",
+  "german": "tysk",
+  "italian": "italiensk",
+  "latvian": "lettisk",
+  "lithuanian": "litauisk",
+  "norwegian": "norsk bokmål",
+  "polish": "polsk",
+  "spanish": "spansk",
+  "swedish": "svensk"
 }

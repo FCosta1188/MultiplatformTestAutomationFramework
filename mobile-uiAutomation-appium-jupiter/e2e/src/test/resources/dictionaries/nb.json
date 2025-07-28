@@ -1,5 +1,20 @@
 {
-  "allow": "",
+  "allow": "tillate",
+  "confirm": "bekreft",
+  "default": "standardinnstilling",
+  "log in": "logg inn",
+
+  "danish": "dansk",
   "english": "engelsk",
-  "norwegian nokmål": "norsk nokmål"
+  "estonian": "estisk",
+  "finnish": "finsk",
+  "french": "fransk",
+  "german": "tysk",
+  "italian": "italiensk",
+  "latvian": "latvisk",
+  "lithuanian": "litauisk",
+  "norwegian": "norsk bokmål",
+  "polish": "polsk",
+  "spanish": "spansk",
+  "swedish": "svensk"
 }

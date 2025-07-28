@@ -1,4 +1,20 @@
 {
   "allow": "allow",
-  "english": "english"
+  "confirm": "confirm",
+  "default": "default",
+  "log in": "log in",
+
+  "danish": "danish",
+  "english": "english",
+  "estonian": "estonian",
+  "finnish": "finnish",
+  "french": "french",
+  "german": "german",
+  "italian": "italian",
+  "latvian": "latvian",
+  "lithuanian": "lithuanian",
+  "norwegian": "norwegian bokmål",
+  "polish": "polish",
+  "spanish": "spanish",
+  "swedish": "swedish"
 }

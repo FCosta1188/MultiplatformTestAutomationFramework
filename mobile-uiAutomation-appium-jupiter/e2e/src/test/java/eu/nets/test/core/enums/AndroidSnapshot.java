@@ -23,7 +23,7 @@ public enum AndroidSnapshot {
     MPA_LOGGED_IN_SMP_12PP("MPA-loggedIn-SMP_12PP", PropertiesUtil.MPA.getProperty("mail.ads.smp12pp.gmail")),
     MPA_LOGGED_IN_SMP_23PP("MPA-loggedIn-SMP_23PP", PropertiesUtil.MPA.getProperty("mail.ads.smp23pp.gmail")),
     MPA_LOGGED_IN_SMP_CH("MPA-loggedIn-SMP-ch", PropertiesUtil.MPA.getProperty("mail.ads.ttpoa_ch_term.gmail")),
-    MPA_LOGGED_IN_SMP_ANDROID_LICENCE("MPA-loggedIn-androidLicence", PropertiesUtil.MPA.getProperty("mail.ads.12months26.gmail")),
+    MPA_LOGGED_IN_SMP_ANDROID_LICENCE_12MONTHS26("MPA-loggedIn-12months26", PropertiesUtil.MPA.getProperty("mail.ads.12months26.gmail")),
     MPA_LOGGED_IN_SMP_IOS_LICENCE_TTPOI14("MPA-loggedIn-ttpoi14", PropertiesUtil.MPA.getProperty("mail.ads.ttpoi14.gmail")),
     MPA_LOGGED_IN_SMP_IOS_LICENCE_1865P1("MPA-loggedIn-ios1865p1", PropertiesUtil.MPA.getProperty("mail.ads.ios1865p1.gmail")),
     //    PUMA
@@ -33,7 +33,7 @@ public enum AndroidSnapshot {
     MPA_LOGGED_IN_PUMA_BOTH("MPA-loggedIn-pumaBoth", PropertiesUtil.MPA.getProperty("mail.ads.puma_both")),
     MPA_LOGGED_IN_PUMA_TERMINAL_ONLY_FI("MPA-loggedIn-pumaTerminal", PropertiesUtil.MPA.getProperty("mail.ads.puma_terminal_only")),
     //    TNP
-    MPA_LOGGED_IN_TNP11("MPA-loggedIn-TNP", PropertiesUtil.MPA.getProperty("mail.ads.tnp11.gmail")),
+    MPA_LOGGED_IN_TNP11("MPA-loggedIn-TNP11", PropertiesUtil.MPA.getProperty("mail.ads.tnp11.gmail")),
     //    BAU = MyCC
     MPA_LOGGED_IN_BAU("MPA-loggedIn-BAU", PropertiesUtil.MPA.getProperty("mail.ads.bau.gmail")),
     //    MEPO

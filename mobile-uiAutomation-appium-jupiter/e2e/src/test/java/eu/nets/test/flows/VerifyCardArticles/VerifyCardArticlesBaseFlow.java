@@ -8,7 +8,7 @@ import eu.nets.test.core.exceptions.UnsupportedPlatformException;
 import eu.nets.test.flows.Registration.RegistrationFlow;
 import eu.nets.test.flows.data.models.MpaCard;
 import eu.nets.test.flows.data.models.MpaUser;
-import eu.nets.test.flows.data.shared.MpaData;
+import eu.nets.test.flows.data.shared.CardArticleData;
 import eu.nets.test.util.EnvUtil;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
@@ -51,21 +51,16 @@ public class VerifyCardArticlesBaseFlow extends AbstractFlow {
 
     private final Set<MpaCard> COMMON_EXCLUDED_OVERVIEW_CARDS = Set.of();
     private final Set<MpaCard> COMMON_EXCLUDED_SUPPORT_CARDS = Set.of(
-            MpaData.CARD_05_getSupport
+            CardArticleData.CARD_05_getSupport
     );
     private final Set<MpaCard> LICENCE_ACTIVATION_CARDS = Set.of(
-            MpaData.CARD_06_NEXI_licenceActivation,
-            MpaData.CARD_06_NETS_licenceActivation
+            CardArticleData.CARD_06_NEXI_licenceActivation,
+            CardArticleData.CARD_06_NETS_licenceActivation
     );
 
     @Override
     public AndroidSnapshot startupAndroidSnapshot() {
         return null;
-    }
-
-    @Override
-    public String flowClassName() {
-        return "VerifyCardArticlesBaseFlow";
     }
 
     protected void run(
@@ -105,7 +100,7 @@ public class VerifyCardArticlesBaseFlow extends AbstractFlow {
             case "test.nexidigital+puma_both@gmail.com":
                 break;
             case "test.nexidigital+puma_terminal@gmail.com":
-                userSpecificExcludedOverviewCards.add(MpaData.CARD_02_invoices);
+                userSpecificExcludedOverviewCards.add(CardArticleData.CARD_02_invoices);
                 break;
             default:
                 logInfo("No user-specific excluded support cards for user: " + user.email());
@@ -116,12 +111,12 @@ public class VerifyCardArticlesBaseFlow extends AbstractFlow {
             case "test.nexidigital+ttpoi14@gmail.com":
                 break;
             case "test.nexidigital+ios1865p1@gmail.com":
-                userSpecificExcludedSupportCards.add(MpaData.CARD_06_NEXI_licenceActivation);
+                userSpecificExcludedSupportCards.add(CardArticleData.CARD_06_NEXI_licenceActivation);
                 break;
             case "test.nexidigital+puma_both@gmail.com":
                 break;
             case "test.nexidigital+puma_terminal@gmail.com":
-                userSpecificExcludedSupportCards.add(MpaData.CARD_03_settlementReport);
+                userSpecificExcludedSupportCards.add(CardArticleData.CARD_03_settlementReport);
                 break;
             default:
                 logInfo("No user-specific excluded support cards for user: " + user.email());

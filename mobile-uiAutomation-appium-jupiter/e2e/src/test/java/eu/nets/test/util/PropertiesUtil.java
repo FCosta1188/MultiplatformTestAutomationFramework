@@ -56,7 +56,7 @@ public final class PropertiesUtil {
 
         try {
             FileInputStream fis;
-            if (EnvUtil.isWin() || EnvUtil.isMacOs()) {
+            if (EnvUtil.isWin() || EnvUtil.isMac()) {
                 fis = new FileInputStream(new File(PathKey.E2E_MODULE_ROOT.toString(), ".env"));
             } else {
                 throw new RuntimeException(logError("OS not supported: " + EnvUtil.OS));

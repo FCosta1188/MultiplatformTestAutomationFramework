@@ -6,8 +6,20 @@ import org.junit.jupiter.params.provider.Arguments;
 import java.util.stream.Stream;
 
 public final class LanguageData {
-    public static Stream<Arguments> stream() {
+    public static Stream<Arguments> streamAll() {
         return Stream.of(MpaLanguage.values())
+                .map(Arguments::of);
+    }
+
+    public static Stream<Arguments> streamSupportedByMpa() {
+        return Stream.of(MpaLanguage.values())
+                .filter(lang -> lang.isSupportedByMpa())
+                .map(Arguments::of);
+    }
+
+    public static Stream<Arguments> streamNotSupportedByMpa() {
+        return Stream.of(MpaLanguage.values())
+                .filter(lang -> !lang.isSupportedByMpa())
                 .map(Arguments::of);
     }
 }

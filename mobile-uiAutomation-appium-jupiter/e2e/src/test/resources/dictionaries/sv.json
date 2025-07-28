@@ -1,5 +1,20 @@
 {
-  "allow": "",
+  "allow": "tillåt",
+  "confirm": "bekräfta",
+  "default": "standard",
+  "log in": "logga in",
+
+  "danish": "danska",
   "english": "engelska",
+  "estonian": "estniska",
+  "finnish": "finska",
+  "french": "franska",
+  "german": "tyska",
+  "italian": "italienska",
+  "latvian": "lettiska",
+  "lithuanian": "litauiska",
+  "norwegian": "norskt bokmål",
+  "polish": "polska",
+  "spanish": "spanska",
   "swedish": "svenska"
 }

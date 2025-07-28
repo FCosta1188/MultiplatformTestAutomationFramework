@@ -32,6 +32,7 @@ import static eu.nets.test.core.enums.MpaWidget.EMAIL_INPUT;
 import static eu.nets.test.core.enums.MpaWidget.GET_HELP_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.INSERT_VAT_CONTINUE_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.IOS_SOFTWARE_KEYBOARD_DONE_BUTTON;
+import static eu.nets.test.core.enums.MpaWidget.IOS_UPDATE_APP_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.LOGIN_BUTTON;
 import static eu.nets.test.core.enums.MpaWidget.OTP_INPUT;
 import static eu.nets.test.core.enums.MpaWidget.PIN_INPUT;
@@ -69,11 +70,6 @@ public class RegistrationCvrFlow extends AbstractFlow {
         }
     }
 
-    @Override
-    public String flowClassName() {
-        return "RegistrationCvrFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}")
     @MethodSource("eu.nets.test.flows.data.Registration.RegistrationCvrData#stream")
     @Epic("Registration with CVR")
@@ -96,6 +92,8 @@ public class RegistrationCvrFlow extends AbstractFlow {
         Allure.step("Launch driver and set system language: " + appLanguage, () -> {
             if (appLanguage != null) {
                 launchDriver(false, appLanguage.getLanguage(), appLanguage.getCountry());
+            } else {
+                throw new RuntimeException("Unable to launch driver due to: appLanguage is null");
             }
         });
 
@@ -110,31 +108,54 @@ public class RegistrationCvrFlow extends AbstractFlow {
         });
 
         if (EnvUtil.isIos()) {
-            Allure.step("[iOS Specific]: Allow notifications (if applicable)");
+            Allure.step("[iOS specific]: Allow notifications (if applicable), UPDATE (if applicable");
             try {
-                if (EnvUtil.isAndroid()) {
-                    driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON, WAIT_10_S);
-                } else if (EnvUtil.isIos()) {
-                    driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON.byIosXpathWithName(appLanguage.capitalize("allow")), WAIT_10_S);
-                } else {
-                    throw new UnsupportedPlatformException();
-                }
+                driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON.byIosXpathWithName(appLanguage.capitalizeDictionaryEntry("allow", false)), WAIT_10_S);
             } catch (Exception skipElement) {
                 logInfo("Element \"" + ALLOW_NOTIFICATIONS_BUTTON + "\" not found -> SKIPPED");
+            }
+
+            try {
+                WebElement iosUpdateAppButton = driver.findElement(IOS_UPDATE_APP_BUTTON.byIosXpathWithName());
+                iosUpdateAppButton.click();
+            } catch (NoSuchElementException skipOptionalElement) {
+                logInfo("Element \"" + IOS_UPDATE_APP_BUTTON + "\" not found -> SKIPPED");
             }
         }
 
         Allure.step("Tap LOG IN (if applicable)", () -> {
             try {
-                driver.safeClick(LOGIN_BUTTON, WAIT_20_S);
+                if (EnvUtil.isAndroid()) {
+                    driver.safeClick(LOGIN_BUTTON, WAIT_10_S);
+                } else if (EnvUtil.isIos()) {
+                    driver.safeClick(LOGIN_BUTTON.byIosXpathWithName(appLanguage.capitalizeDictionaryEntry("log in", false)), WAIT_10_S);
+                } else {
+                    throw new UnsupportedPlatformException();
+                }
             } catch (Exception skipElement) {
                 logInfo("Element \"" + LOGIN_BUTTON + "\" not found -> SKIPPED");
             }
         });
 
         Allure.step("Insert username and tap CONTINUE: " + user.email(), () -> {
-            driver.safeSendKeys(EMAIL_INPUT, WAIT_10_S, user.email());
-            driver.safeClick(CONTINUE_BUTTON, WAIT_10_S);
+            WebElement emailInput = driver.safeSendKeys(EMAIL_INPUT, WAIT_10_S, user.email());
+            WebElement continueButton = driver.safeClick(CONTINUE_BUTTON, WAIT_10_S);
+
+            //TODO: remove workaround below when fix is released (ISSUE: currently, the email page might reappear after clicking CONTINUE)
+            boolean isEmailInputStale = false;
+            if(EnvUtil.isAndroid()) {
+                isEmailInputStale = driver.waitUntilElementStaleness(emailInput, WAIT_10_S);
+            } else if (EnvUtil.isIos()) {
+                isEmailInputStale = driver.waitUntilElementStaleness(emailInput, WAIT_10_S);
+            } else {
+                throw new UnsupportedPlatformException();
+            }
+
+            if(!isEmailInputStale) {
+                logInfo("Elements \"" + EMAIL_INPUT + "and" + CONTINUE_BUTTON + "\" still visible -> RETRYING once");
+                driver.safeSendKeys(EMAIL_INPUT, WAIT_10_S, user.email());
+                driver.safeClick(CONTINUE_BUTTON, WAIT_10_S);
+            }
         });
 
         Allure.step("Tap GET HELP SIGNING IN", () -> {
@@ -301,7 +322,7 @@ public class RegistrationCvrFlow extends AbstractFlow {
         });
 
         if (EnvUtil.isAndroid()) {
-            Allure.step("[Android Specific] Allow notifications (if applicable)", () -> {
+            Allure.step("[Android specific] Allow notifications (if applicable)", () -> {
                 try {
                     driver.safeClick(ALLOW_NOTIFICATIONS_BUTTON, WAIT_10_S);
                 } catch (Exception skipElement) {

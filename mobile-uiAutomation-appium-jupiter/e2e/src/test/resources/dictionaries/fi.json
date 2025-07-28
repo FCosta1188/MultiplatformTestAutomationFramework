@@ -1,5 +1,20 @@
 {
-  "allow": "",
+  "allow": "lubada",
+  "confirm": "vahvista",
+  "default": "oletus",
+  "log in": "kirjaudu sisään",
+
+  "danish": "tanska",
   "english": "englanti",
-  "finnish": "suomi"
+  "estonian": "viro",
+  "finnish": "suomi",
+  "french": "ranska",
+  "german": "saksa",
+  "italian": "italia",
+  "latvian": "latvia",
+  "lithuanian": "liettua",
+  "norwegian": "norjan bokmål",
+  "polish": "puola",
+  "spanish": "espanja",
+  "swedish": "ruotsi"
 }

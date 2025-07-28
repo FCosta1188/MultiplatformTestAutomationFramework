@@ -11,7 +11,45 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public enum MpaWidget {
-    //Buttons
+    //BUTTONs-------------------------------
+    //Home
+    OVERVIEW_DASHBOARD_BUTTON(
+            "FrameLayout", "action_dashboard",
+            "Button", "overview_button", "1", "OVERVIEW",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    NEXI_SOFTPOS_DASHBOARD_BUTTON(
+            "FrameLayout", "action_softpay_enroll_virtual_terminal",
+            "Button", "taptopay_button", null, "NEXI SOFTPOS",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    NETS_SOFTPOS_DASHBOARD_BUTTON(
+            "FrameLayout", "action_softpay_enroll_virtual_terminal",
+            "Button", "taptopay_button", null, "NETS SOFTPOS",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    TERMINALS_DASHBOARD_BUTTON(
+            "FrameLayout", "action_terminals",
+            "Button", "terminal_button", null, "TERMINALS",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SUPPORT_DASHBOARD_BUTTON(
+            "FrameLayout", "action_support",
+            "Button", "support_button", null, "SUPPORT",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    //--------------------------
+
     LOGIN_BUTTON(
             "Button", "getStartedButton",
             "Button", "Log in", null, "Log in",
@@ -138,27 +176,6 @@ public enum MpaWidget {
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
     ),
-    OVERVIEW_DASHBOARD_BUTTON(
-            "FrameLayout", "action_dashboard",
-            "Button", "overview_button", "1", "OVERVIEW",
-            MPA_ID(),
-            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
-            null, null
-    ),
-    SUPPORT_DASHBOARD_BUTTON(
-            "FrameLayout", "action_support",
-            "Button", "support_button", null, "SUPPORT",
-            MPA_ID(),
-            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
-            null, null
-    ),
-    TERMINALS_DASHBOARD_BUTTON(
-            "FrameLayout", "action_terminals",
-            "Button", "terminal_button", null, "TERMINALS",
-            MPA_ID(),
-            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
-            null, null
-    ),
     TERMINALS_DETAIL_BUTTON(
             "ViewGroup", "terminal",
             "iosType_PLACEHOLDER", "iosAxeId_PLACEHOLDER", "WIP", "WIP",
@@ -178,6 +195,257 @@ public enum MpaWidget {
             "enText_PLACEHOLDER",
             null,
             null
+    ),
+
+    //Transactions
+    TRANSACTIONS_EMPTY_STATE_TITLE(
+            "TextView", "empty_text_title",
+            "StaticText", "No transactions yet", "No transactions yet", "No transactions yet",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    TRANSACTIONS_EMPTY_STATE_TEXT(
+            "TextView", "empty_text",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+
+    //Accounting
+    ACCOUNTING_TITLE(
+            "TextView", "toolbarTitle",
+            "StaticText", "Accounting", "Accounting", "Accounting",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_TAB(
+            "TextView", "",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_RECORD_INVOICE_NO(
+            "TextView", "invoiceNumber",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_RECORD_INVOICE_DATE(
+            "TextView", "invoiceDate",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_STATEMENTS_FILTER_BUTTON(
+            "ImageView", "img_filter",
+            "Button", "Filter", null, "Filter",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_SETTLEMENTS_INVOICES_FILTER_BUTTON(
+            "ImageView", "img_filter",
+            "Button", "settings", null, "settings",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_FILTER(
+            "TextView", "filterType",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_STATEMENT_NO_INPUT(
+            "EditText", "editText",
+            "TextField", null, "Statement no", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_DATE_FILTER_YEAR_SELECTOR(
+            "Button", "month_navigation_fragment_toggle",
+            "Button", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_DATE_FILTER_MONTH_NAV_PREV(
+            "Button", "month_navigation_previous",
+            "Button", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_DATE_FILTER_MONTH_NAV_NEXT(
+            "Button", "month_navigation_next",
+            "Button", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_DATE_FILTER_OK_BUTTON(
+            "Button", "confirm_button",
+            "Button", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_DATE_FILTER_APPLY_BUTTON(
+            "", "",
+            "Button", "Apply", null, "Apply",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_APPLY_BUTTON(
+            "Button", "applyButton",
+            "Button", "", null, "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_DONE_BUTTON(
+            "Button", "doneButton",
+            "Button", null, null, null,
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_CLEAR_ALL_BUTTON(
+            "TextView", "rightText",
+            "StaticText", "", null, "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_CLEAR_FILTER_BUTTON(
+            "Button", "btnClearFilters",
+            "Button", "Clear filters", null, "Clear filters",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_RESET_FILTERS_BUTTON(
+            "TextView", "retryBtn",
+            "Button", "Reset filters", null, "Reset filters",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_SETTLEMENTS_EMPTY_STATE_TITLE(
+            "TextView", "empty_text_title",
+            "StaticText", "No Payouts yet", "No Payouts yet", "No Payouts yet",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_SETTLEMENTS_EMPTY_STATE_TEXT(
+            "TextView", "empty_text",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_INVOICES_EMPTY_STATE_TITLE(
+            "TextView", "empty_text_title",
+            "StaticText", "No Invoices yet", "No Invoices yet", "No Invoices yet",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_INVOICES_EMPTY_STATE_TEXT(
+            "TextView", "empty_text",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_SHARE_BUTTON(
+            "ImageView", "shareIcon",
+            "Button", "share", null, "share",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_BACK_BUTTON(
+            "ImageView", "back_icon",
+            "Button", "Back", null, "Back",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    ACCOUNTING_FILTERS_CLOSE_BUTTON(
+            "ImageView", "cancel_icon",
+            "Image", "", null, "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SETTLEMENTS_GET_IN_CONTACT_BUTTON(
+            "Button", "learn_more",
+            "Button", "GET IN CONTACT", null, "GET IN CONTACT",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SETTLEMENTS_GET_IN_CONTACT_CLOSE_BUTTON(
+            "ImageView", "financing_advert_dismiss_btn",
+            "Button", "roundClose", null, "roundClose",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SETTLEMENTS_WEBVIEW_LOGO_NEXI(
+            "androidType_PLACEHOLDER", "androidId_PLACEHOLDER",
+            "Image", "nexi logo", null, "nexi logo",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SETTLEMENTS_WEBVIEW_LOGO_NETS(
+            "androidType_PLACEHOLDER", "androidId_PLACEHOLDER",
+            "Image", null, null, null,
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SETTLEMENTS_WEBVIEW_NETS_ACCOUNT(
+            "androidType_PLACEHOLDER", "androidId_PLACEHOLDER",
+            "StaticText", "Sign in for your Nets Account", "Sign in for your Nets Account", "Sign in for your Nets Account",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SETTLEMENTS_WEBVIEW_BACK_BUTTON(
+            "ImageView", "back_icon",
+            "Button", "Back", null, "Back",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SETTLEMENTS_WEBVIEW_BACK_BUTTON_IOS_BUG(
+            "ImageView", "back_icon",
+            "Button", "“ ”", null, "“ ”",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+
+    //WebView
+    WEBVIEW(
+            "android.webkit.WebView", "webView",
+            "WebView", null, null, null,
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
     ),
 
     //Analytics Elements (graphs and tabs)
@@ -249,6 +517,13 @@ public enum MpaWidget {
     SIDEMENU_LANGUAGE(
             "LinearLayoutCompat", "language",
             "Image", "sidemenu_language", null, "sidemenu_language",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    SIDEMENU_SECURITY(
+            "LinearLayoutCompat", "security",
+            "Image", "sidemenu_security", null, "sidemenu_security",
             MPA_ID(),
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
@@ -355,6 +630,28 @@ public enum MpaWidget {
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
     ),
+    LANGUAGE_LIST_CONTAINER(
+            "GridView", "recycler_view",
+            "Table", "change_lamguage_table_view", null, null,
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    CHANGE_LANGUAGE_CONFIRM_BUTTON(
+            "Button", "button1",
+            "Button", "", null, null,
+            "android",
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    //Security
+    SECURITY_TITLE(
+            "TextView", "toolbarTitle",
+            "StaticText", "Security", "Security", "Security",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
 
     //Inputs
     EMAIL_INPUT(
@@ -367,6 +664,71 @@ public enum MpaWidget {
     OTP_INPUT(
             "EditText", "pinField",
             "TextField", null, null, "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    VAT_INPUT(
+            "EditText", "enrlCVREd",
+            "TextField", null, "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+
+    //PIN
+    PIN_TITLE(
+            "TextView", "lockTitle",
+            "StaticText", "modify_pin_view_label_title", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    PIN_DESCRIPTION(
+            "TextView", "lockDescription",
+            "", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    PIN_BACK_BUTTON(
+            "ImageButton", "",
+            "", "", null, "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    PIN_INFO_BUTTON(
+            "ImageView", "infoIcon",
+            "Button", "Info", null, "Info",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    PIN_INFO_CLOSE_BUTTON(
+            "ImageView", "cancel_icon",
+            "Button", "close large", null, "close large",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    PIN_INFO_TEXT(
+            "", "",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    PIN_INFO_RULES_TITLE(
+            "TextView", "pinRulesTitle",
+            "", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    PIN_INFO_RULES(
+            "TextView", "pinRules",
+            "", "", "", "",
             MPA_ID(),
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
@@ -385,9 +747,23 @@ public enum MpaWidget {
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
     ),
-    VAT_INPUT(
-            "EditText", "enrlCVREd",
-            "TextField", null, "", "",
+    CHANGE_CODE_BUTTON(
+            "TextView", "",
+            "StaticText", "Change code", "Change code", "Change code",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    CHANGE_CODE_TITLE(
+            "", "",
+            "StaticText", "Change code", "Change code", "Change code",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    FORGOT_CODE_BUTTON(
+            "TextView", "lockIForgotPinCode",
+            "Button", "require_pin_view_button_forgot_pin", null, "I forgot my code",
             MPA_ID(),
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
@@ -622,7 +998,7 @@ public enum MpaWidget {
             null, null
     ),
     CARD_ARTICLE_PARAGRAPH_HYPERLINK(
-            null, null,
+            "androidType_PLACEHOLDER", "androidId_PLACEHOLDER",
             "Button", "", null, "",
             MPA_ID(),
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
@@ -631,6 +1007,29 @@ public enum MpaWidget {
     CARD_ARTICLE_SOFTPOS_ACTIVATEYOURLICENCE_BUTTON(
             "androidType_PLACEHOLDER", "androidId_PLACEHOLDER",
             "Button", "", null, "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+
+    //Nexi/Nets Softpos
+    DEVICE_NOT_SUPPORTED_HEADER(
+            "TextView", "header",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    DEVICE_NOT_SUPPORTED_TITLE(
+            "TextView", "title",
+            "StaticText", "", "", "",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),
+    DEVICE_NOT_SUPPORTED_DESCRIPTION(
+            "TextView", "description",
+            "StaticText", "", "", "",
             MPA_ID(),
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
@@ -650,12 +1049,19 @@ public enum MpaWidget {
             null, null
     ),
     IOS_SOFTWARE_KEYBOARD_DONE_BUTTON(
-            null, null,
+            "androidType_PLACEHOLDER", "androidId_PLACEHOLDER",
             "Button", "Done", null, "Done",
             MPA_ID(),
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
-    );
+    ),
+    IOS_UPDATE_APP_BUTTON(
+            "androidType_PLACEHOLDER", "androidId_PLACEHOLDER",
+            "StaticText", "UPDATE", "UPDATE", "UPDATE",
+            MPA_ID(),
+            "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
+            null, null
+    ),;
 
     private final String androidType;
     private final String androidId;
@@ -687,7 +1093,11 @@ public enum MpaWidget {
         this.img = img;
 
         if (EnvUtil.isAndroid()) {
-            this.androidType = "android.widget." + androidType; //Button
+            if(androidType.contains(".")) {
+                this.androidType = androidType;
+            } else {
+                this.androidType = "android.widget." + androidType;
+            }
             this.androidResourceId = String.format("%s:id/%s", this.appOrBundleId, this.androidId);
             this.iosType = "";
         } else if (EnvUtil.isIos()) {
@@ -777,6 +1187,10 @@ public enum MpaWidget {
         return By.xpath(String.format("//%s[@resource-id=\"%s\" and %s]", androidType, getAndroidResourceId(), buildPredicate(attribute, attributeValue)));
     }
 
+    public By byAndroidXpathWithAttribute(String attribute, String attributeValue) {
+        return By.xpath(String.format("//%s[@%s=\"%s\"]", androidType, attribute, attributeValue));
+    }
+
     public By byIosAccessibilityId() {
         return AppiumBy.accessibilityId(iosAccessibilityId);
     }
@@ -811,6 +1225,10 @@ public enum MpaWidget {
 
     public By byIosXpathWithNameAndIndex(String name, int index) {
         return By.xpath(String.format("(//%s[@name=\"%s\"])[%d]", iosType, name, index));
+    }
+
+    public By byIosXpathWithNameAndAttribute(String attribute, String attributeValue) {
+        return By.xpath(String.format("//%s[@name=\"%s\"  and %s]", iosType, getIosAccessibilityId(), buildPredicate(attribute, attributeValue)));
     }
 
     public By byXpath(String xpath) {

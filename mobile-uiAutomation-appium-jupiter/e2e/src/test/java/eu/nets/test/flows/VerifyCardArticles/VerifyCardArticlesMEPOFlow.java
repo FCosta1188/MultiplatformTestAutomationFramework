@@ -25,11 +25,6 @@ public class VerifyCardArticlesMEPOFlow extends AbstractFlow {
         return AndroidSnapshot.MPA_LOGGED_IN_MEPO;
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyMpaCardArticlesMEPOFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}, {2}")
     @MethodSource("eu.nets.test.flows.data.VerifyCardArticles.VerifyCardArticlesData#streamMEPO")
     @Epic("Verify cards and related articles")

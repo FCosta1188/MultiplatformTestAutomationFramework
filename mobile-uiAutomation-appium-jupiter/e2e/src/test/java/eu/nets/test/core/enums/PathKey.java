@@ -26,6 +26,7 @@ public enum PathKey {
     DICTIONARIES,
     IO_APPIUM_SETTINGS_V5,
     IO_APPIUM_SETTINGS_V2,
+    CHROME_DRIVER,
     IMG,
     ALLURE_RESULTS,
     CUSTOM_ALLURE_REPORTS,
@@ -64,12 +65,12 @@ public enum PathKey {
 
         switch (this) {
             case ADB:
-                path = EnvUtil.isMacOs()
+                path = EnvUtil.isMac()
                         ? Paths.get(USER_HOME, "Library/Android/sdk/platform-tools/adb")
                         : Paths.get("adb");
                 break;
             case EMULATOR:
-                path = EnvUtil.isMacOs()
+                path = EnvUtil.isMac()
                         ? Paths.get(USER_HOME, "Library/Android/sdk/emulator/emulator")
                         : Paths.get("emulator");
                 break;
@@ -95,6 +96,20 @@ public enum PathKey {
                 path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "android-apks", IO_APPIUM_SETTINGS_V2_APK_FILENAME));
                 break;
 
+            case CHROME_DRIVER:
+                if (EnvUtil.isWin32()) {
+                    path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "chromedriver", "chromedriver-win32", "chromedriver"));
+                } else if (EnvUtil.isWin64()) {
+                    path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "chromedriver", "chromedriver-win64", "chromedriver"));
+                } else if (EnvUtil.isMacIntel()) {
+                    path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "chromedriver", "chromedriver-mac-x64", "chromedriver"));
+                } else if (EnvUtil.isMacAppleSilicon()) {
+                    path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "chromedriver", "chromedriver-mac-arm64", "chromedriver"));
+                } else {
+                    throw new UnupportedOsException();
+                }
+                break;
+
             case IMG:
                 path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "img"));
                 break;
@@ -109,7 +124,7 @@ public enum PathKey {
 
             case LOKALISE_BUNDLE:
                 path = E2E_MODULE_ROOT.resolve(Paths.get(
-                        PropertiesUtil.MPA.getProperty("lokalise.bundle.dir").replace("|", SEPARATOR))
+                        PropertiesUtil.CONFIG.getProperty("lokalise.bundle.dir").replace("|", SEPARATOR))
                 );
                 break;
 
@@ -138,7 +153,7 @@ public enum PathKey {
             );
 
             fallbackPathString = PropertiesUtil.CONFIG.getProperty("appium.mainjs.win");
-        } else if (EnvUtil.isMacOs()) {
+        } else if (EnvUtil.isMac()) {
             // Common MacOS paths: Apple Silicon, Intel, NVM, Yarn
             candidatePaths.add("/opt/homebrew/lib/node_modules/appium/build/lib/main.js");
             candidatePaths.add("/usr/local/lib/node_modules/appium/build/lib/main.js");

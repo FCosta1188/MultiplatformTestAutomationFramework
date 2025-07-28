@@ -96,7 +96,7 @@ public final class AllureUtil {
                         "-o", customReportDir.toString(),
                         "--clean" //overwrite if dir already exists
                 ).start().waitFor();
-            } else if (EnvUtil.isMacOs()) {
+            } else if (EnvUtil.isMac()) {
                 new ProcessBuilder(
                         "allure", "generate",
                         ALLURE_RESULTS_DIR.toString(),

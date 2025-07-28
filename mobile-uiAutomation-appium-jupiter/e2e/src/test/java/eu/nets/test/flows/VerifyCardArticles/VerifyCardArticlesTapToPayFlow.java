@@ -29,11 +29,6 @@ public class VerifyCardArticlesTapToPayFlow extends AbstractFlow {
         return null;
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyCardArticlesTapToPayFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}, {2}")
     @MethodSource("eu.nets.test.flows.data.VerifyCardArticles.VerifyCardArticlesData#streamTapToPay")
     @Epic("Verify cards and related articles")

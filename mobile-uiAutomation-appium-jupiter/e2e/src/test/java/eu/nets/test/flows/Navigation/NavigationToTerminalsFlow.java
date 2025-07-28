@@ -5,7 +5,7 @@ import eu.nets.test.core.enums.AndroidSnapshot;
 import eu.nets.test.core.enums.MpaLanguage;
 import eu.nets.test.core.exceptions.UnsupportedPlatformException;
 import eu.nets.test.flows.Registration.RegistrationFlow;
-import eu.nets.test.flows.data.shared.MpaData;
+import eu.nets.test.flows.data.shared.UserData;
 import eu.nets.test.util.EnvUtil;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -50,13 +50,8 @@ public class NavigationToTerminalsFlow extends AbstractFlow {
         }
     }
 
-    @Override
-    public String flowClassName() {
-        return "NavigationToTerminalsFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}")
-    @MethodSource("eu.nets.test.flows.data.shared.LanguageData#stream")
+    @MethodSource("eu.nets.test.flows.data.shared.LanguageData#streamSupportedByMpa")
     @Epic("Navigation to Terminals")
     @Feature("https://nexigroup-germany.atlassian.net/browse/MSA-6363")
     @Story("Navigate to Terminals with SMP user")
@@ -92,7 +87,7 @@ public class NavigationToTerminalsFlow extends AbstractFlow {
             Allure.step("[iOS specific]: install MPA and run RegistrationFlow", () -> {
                 RegistrationFlow rFlow = new RegistrationFlow();
                 rFlow.setDriver(this.driver);
-                rFlow.run(MpaData.allUsers().get(0), appLanguage, false, false);
+                rFlow.run(UserData.allUsers().get(0), appLanguage, false, false);
                 this.setDriver(rFlow.getDriver());
             });
         }

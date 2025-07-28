@@ -1,0 +1,20 @@
+{
+  "allow": "lubada",
+  "confirm": "kinnita",
+  "default": "vaikimisi",
+  "log in": "logi sisse",
+
+  "danish": "taani",
+  "english": "inglise",
+  "estonian": "eesti",
+  "finnish": "soome",
+  "french": "prantsuse",
+  "german": "saksa",
+  "italian": "itaalia",
+  "latvian": "läti",
+  "lithuanian": "leedu",
+  "norwegian": "norra bokmål",
+  "polish": "poola",
+  "spanish": "hispaania",
+  "swedish": "rootsi"
+}

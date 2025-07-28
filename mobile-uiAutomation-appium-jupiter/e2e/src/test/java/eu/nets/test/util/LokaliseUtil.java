@@ -28,13 +28,13 @@ import static eu.nets.test.util.AllureUtil.logError;
 import static eu.nets.test.util.AllureUtil.logInfo;
 
 public final class LokaliseUtil {
-    private static final String API_BASE_URL = PropertiesUtil.MPA.getProperty("lokalise.baseUrl");
-    private static final String PROJECT_ID = PropertiesUtil.MPA.getProperty("lokalise.projectId");
+    private static final String API_BASE_URL = PropertiesUtil.CONFIG.getProperty("lokalise.baseUrl");
+    private static final String PROJECT_ID = PropertiesUtil.CONFIG.getProperty("lokalise.projectId");
     private static final String API_PROJECT_URL = API_BASE_URL + "/projects/" + PROJECT_ID;
     private static final String API_URL_SYNC = API_PROJECT_URL + "/files/download";
     private static final String API_URL_ASYNC = API_PROJECT_URL + "/files/async-download";
-    private static final String API_TOKEN_SYNC = PropertiesUtil.MPA.getProperty("lokalise.apiTokenSync");
-    private static final String API_TOKEN_ASYNC = PropertiesUtil.MPA.getProperty("lokalise.apiTokenAsync");
+    private static final String API_TOKEN_SYNC = PropertiesUtil.CONFIG.getProperty("lokalise.apiTokenSync");
+    private static final String API_TOKEN_ASYNC = PropertiesUtil.CONFIG.getProperty("lokalise.apiTokenAsync");
 
     private static Path BUNDLE_FILEPATH;
 

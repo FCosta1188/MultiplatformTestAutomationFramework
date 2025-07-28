@@ -25,11 +25,6 @@ public class VerifyCardArticlesSMPFlow extends AbstractFlow {
         return AndroidSnapshot.MPA_LOGGED_IN_SMP_12PP;
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyCardArticlesSMPFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}, {2}")
     @MethodSource("eu.nets.test.flows.data.VerifyCardArticles.VerifyCardArticlesData#streamSMP")
     @Epic("Verify cards and related articles")

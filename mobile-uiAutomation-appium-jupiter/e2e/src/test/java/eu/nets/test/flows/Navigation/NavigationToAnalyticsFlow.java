@@ -5,7 +5,7 @@ import eu.nets.test.core.enums.AndroidSnapshot;
 import eu.nets.test.core.enums.MpaLanguage;
 import eu.nets.test.core.exceptions.UnsupportedPlatformException;
 import eu.nets.test.flows.Registration.RegistrationFlow;
-import eu.nets.test.flows.data.shared.MpaData;
+import eu.nets.test.flows.data.shared.UserData;
 import eu.nets.test.util.EnvUtil;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -51,13 +51,8 @@ public class NavigationToAnalyticsFlow extends AbstractFlow {
         }
     }
 
-    @Override
-    public String flowClassName() {
-        return "NavigationToAnalyticsFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}")
-    @MethodSource("eu.nets.test.flows.data.shared.LanguageData#stream")
+    @MethodSource("eu.nets.test.flows.data.shared.LanguageData#streamSupportedByMpa")
     @Epic("Navigation to Analytics")
     @Feature("")
     @Story("Navigation to Analytics and check that the elements displayed are correct")
@@ -93,7 +88,7 @@ public class NavigationToAnalyticsFlow extends AbstractFlow {
             Allure.step("[iOS specific]: run RegistrationFlow", () -> {
                 RegistrationFlow rFlow = new RegistrationFlow();
                 rFlow.setDriver(this.driver);
-                rFlow.run(MpaData.allUsers().get(0), appLanguage, false, false);
+                rFlow.run(UserData.allUsers().get(0), appLanguage, false, false);
                 this.setDriver(rFlow.getDriver());
             });
         }

@@ -15,6 +15,8 @@ import java.util.function.Supplier;
 public interface MpaDriver extends WebDriver {
     boolean isNativeAppContext();
 
+    void switchAppContext(String context);
+
     boolean waitUntilCondition(Supplier<Boolean> condition, int waitS);
 
     boolean waitUntilCondition(ExpectedCondition<Boolean> condition, int waitS);

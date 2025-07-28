@@ -25,11 +25,6 @@ public class VerifyCardArticlesPUMAFlow extends AbstractFlow {
         return AndroidSnapshot.MPA_LOGGED_IN_PUMA;
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyMpaCardArticlesPUMAFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0}, {1}, {2}")
     @MethodSource("eu.nets.test.flows.data.VerifyCardArticles.VerifyCardArticlesData#streamPUMA")
     @Epic("Verify cards and related articles")

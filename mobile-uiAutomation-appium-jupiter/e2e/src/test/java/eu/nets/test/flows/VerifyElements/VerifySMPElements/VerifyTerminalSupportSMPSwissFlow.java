@@ -50,11 +50,6 @@ public class VerifyTerminalSupportSMPSwissFlow extends AbstractFlow {
         }
     }
 
-    @Override
-    public String flowClassName() {
-        return "VerifyTerminalSupportSMPSwissFlow";
-    }
-
     @ParameterizedTest(name = "[{index}] {0} {1} {2}")
     @MethodSource("eu.nets.test.flows.data.VerifyElements.VerifySMPElements.VerifyTerminalSupportSMPElementsData#streamSwissAccount")
     @Epic("Verify SMP elements")
