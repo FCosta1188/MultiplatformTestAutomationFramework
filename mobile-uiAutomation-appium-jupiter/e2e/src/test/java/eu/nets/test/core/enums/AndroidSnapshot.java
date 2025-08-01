@@ -89,13 +89,13 @@ public enum AndroidSnapshot {
     public void create(MpaAndroidDriver driver) throws IOException {
         switch (this) {
             case NO_MPA:
-                driver.installApp(PathKey.IO_APPIUM_SETTINGS_V5.resolve().asPath(), "io.appium.settings");
+                driver.installApp(PathKey.IO_APPIUM_SETTINGS.resolve().asPath(), "io.appium.settings");
 
                 driver.quit();
                 break;
             case MPA_LOGGED_OUT:
                 if (!driver.isAppInstalled("io.appium.settings")) {
-                    driver.installApp(PathKey.IO_APPIUM_SETTINGS_V5.resolve().asPath(), "io.appium.settings");
+                    driver.installApp(PathKey.IO_APPIUM_SETTINGS.resolve().asPath(), "io.appium.settings");
                 }
                 driver.installMpa();
 
@@ -106,7 +106,8 @@ public enum AndroidSnapshot {
                 throw new RuntimeException(logError(String.format("create() non applicable to snapshot: %s - Valid options: [%s, %s]",
                         this,
                         NO_MPA,
-                        MPA_LOGGED_OUT)));
+                        MPA_LOGGED_OUT
+                )));
         }
     }
 

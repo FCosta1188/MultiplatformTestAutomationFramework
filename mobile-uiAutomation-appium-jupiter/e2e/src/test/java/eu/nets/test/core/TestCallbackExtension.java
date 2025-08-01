@@ -23,7 +23,7 @@ public class TestCallbackExtension implements AfterTestExecutionCallback {
     }
 
     @Override
-    public void afterTestExecution(ExtensionContext context) throws Exception {
+    public void afterTestExecution(ExtensionContext context) {
         Optional<Throwable> failure = context.getExecutionException();
 
         if (failure.isPresent()) {

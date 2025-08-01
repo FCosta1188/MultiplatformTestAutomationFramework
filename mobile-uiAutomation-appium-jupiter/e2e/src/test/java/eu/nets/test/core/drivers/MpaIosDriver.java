@@ -44,26 +44,26 @@ import java.util.function.Supplier;
 import static eu.nets.test.util.AllureUtil.logError;
 import static eu.nets.test.util.AllureUtil.logInfo;
 
-public class MpaIosDriver extends IOSDriver implements MpaDriver, TestWatcher {
+public class MpaIOSDriver extends IOSDriver implements MpaDriver, TestWatcher {
     public static final String MPA_BUNDLE_ID = PropertiesUtil.ENV.getProperty("mpaBundleId"); // bundle ID
     public static final Path MPA_APP_DIR = PathKey.MPA.resolve().asPath();
     public static final int SLEEP_MS = 500;
 
-    public MpaIosDriver() throws MalformedURLException {
+    public MpaIOSDriver() throws MalformedURLException {
         super(
                 new URL(PropertiesUtil.CONFIG.getProperty("appium.driver.remoteAddress")),
                 EnvUtil.getXCUITestOptions()
         );
     }
 
-    public MpaIosDriver(int waitS, boolean setAppiumApp) throws MalformedURLException {
+    public MpaIOSDriver(int waitS, boolean setAppiumApp) throws MalformedURLException {
         super(
                 new URL(PropertiesUtil.CONFIG.getProperty("appium.driver.remoteAddress")),
                 EnvUtil.getDesideredCapabilities(waitS, setAppiumApp)
         );
     }
 
-    public MpaIosDriver(int waitS, boolean setAppiumApp, String language, String locale) throws MalformedURLException {
+    public MpaIOSDriver(int waitS, boolean setAppiumApp, String language, String locale) throws MalformedURLException {
         super(
                 new URL(PropertiesUtil.CONFIG.getProperty("appium.driver.remoteAddress")),
                 EnvUtil.getDesideredCapabilities(waitS, setAppiumApp, language, locale)

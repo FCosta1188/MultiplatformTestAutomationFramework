@@ -1061,7 +1061,7 @@ public enum MpaWidget {
             MPA_ID(),
             "lokaliseKey_PLACEHOLDER", "enText_PLACEHOLDER",
             null, null
-    ),;
+    );
 
     private final String androidType;
     private final String androidId;

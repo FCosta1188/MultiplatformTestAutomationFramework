@@ -24,18 +24,16 @@ public enum PathKey {
     APPIUM_SERVER,
     MPA,
     DICTIONARIES,
-    IO_APPIUM_SETTINGS_V5,
-    IO_APPIUM_SETTINGS_V2,
+    IO_APPIUM_SETTINGS,
     CHROME_DRIVER,
     IMG,
     ALLURE_RESULTS,
     CUSTOM_ALLURE_REPORTS,
     LOKALISE_BUNDLE;
 
-    public static final String MPA_APK_FILENAME = "mpa_noDexguard.apk";
-    public static final String MPA_APP_FILENAME = "MyPayments_Pre-Prod_noIXGuard.app";
-    public static final String IO_APPIUM_SETTINGS_V5_APK_FILENAME = "io-appium-settings_apk-debug_v5-14-5.apk";
-    public static final String IO_APPIUM_SETTINGS_V2_APK_FILENAME = "io-appium-settings_apk-debug_v2-16-2.apk";
+    public static final String MPA_APK_FILENAME = "mpa.apk";
+    public static final String MPA_APP_FILENAME = "mpa.app";
+    public static final String IO_APPIUM_SETTINGS_APK_FILENAME = "io-appium-settings_apk-debug.apk";
     public static final String SEPARATOR = File.separator;
     public static final Path E2E_MODULE_ROOT = Paths.get(".." + SEPARATOR + "e2e");
     public static final String USER_HOME = System.getProperty("user.home");
@@ -88,12 +86,8 @@ public enum PathKey {
                 path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "dictionaries"));
                 break;
 
-            case IO_APPIUM_SETTINGS_V5:
-                path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "android-apks", IO_APPIUM_SETTINGS_V5_APK_FILENAME));
-                break;
-
-            case IO_APPIUM_SETTINGS_V2:
-                path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "android-apks", IO_APPIUM_SETTINGS_V2_APK_FILENAME));
+            case IO_APPIUM_SETTINGS:
+                path = E2E_MODULE_ROOT.resolve(Paths.get("src", "test", "resources", "android-apks", IO_APPIUM_SETTINGS_APK_FILENAME));
                 break;
 
             case CHROME_DRIVER:

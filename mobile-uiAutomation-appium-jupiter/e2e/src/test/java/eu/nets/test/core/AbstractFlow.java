@@ -2,12 +2,13 @@ package eu.nets.test.core;
 
 import eu.nets.test.core.drivers.MpaAndroidDriver;
 import eu.nets.test.core.drivers.MpaDriver;
-import eu.nets.test.core.drivers.MpaIosDriver;
+import eu.nets.test.core.drivers.MpaIOSDriver;
 import eu.nets.test.core.enums.AndroidSnapshot;
 import eu.nets.test.core.enums.MpaLanguage;
 import eu.nets.test.core.exceptions.UnsupportedPlatformException;
 import eu.nets.test.util.AllureUtil;
 import eu.nets.test.util.EnvUtil;
+import eu.nets.test.util.LokaliseUtil;
 import eu.nets.test.util.PropertiesUtil;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.qameta.allure.Allure;
@@ -91,7 +92,7 @@ public abstract class AbstractFlow {
             if (EnvUtil.isAndroid()) {
                 this.driver = new MpaAndroidDriver(200, false);
             } else if (EnvUtil.isIos()) {
-                this.driver = new MpaIosDriver(200, false);
+                this.driver = new MpaIOSDriver(200, false);
             } else {
                 throw new UnsupportedPlatformException();
             }
@@ -103,7 +104,7 @@ public abstract class AbstractFlow {
             if (EnvUtil.isAndroid()) {
                 this.driver = new MpaAndroidDriver(200, setAppiumApp);
             } else if (EnvUtil.isIos()) {
-                this.driver = new MpaIosDriver(200, setAppiumApp);
+                this.driver = new MpaIOSDriver(200, setAppiumApp);
             } else {
                 throw new UnsupportedPlatformException();
             }
@@ -118,7 +119,7 @@ public abstract class AbstractFlow {
                 int retries = 0;
                 while (driver == null && retries++ <= 3) {
                     try {
-                        this.driver = new MpaIosDriver(200, setAppiumApp, language, locale);
+                        this.driver = new MpaIOSDriver(200, setAppiumApp, language, locale);
                     } catch (Exception e) {
                         logError("Error launching iOS driver - retry #" + retries + ": " + e.getMessage());
                         EnvUtil.safeSleep(5000);
@@ -151,15 +152,15 @@ public abstract class AbstractFlow {
 
         reportDir = AllureUtil.createCustomReportFolder(this.getClass().getSimpleName());
 
-        //        try{
-        //            LokaliseUtil.downloadBundle(true);
-        //            logInfo("Lokalise bundle downloaded with async API");
-        //        } catch (Exception e) {
-        //            logInfo("Lokalise bundle async API download failed, trying sync API...");
-        //            LokaliseUtil.downloadBundle(false);
-        //            logInfo("Lokalise bundle downloaded with sync API");
-        //        }
-        //        this.lokaliseBundle = LokaliseUtil.getBundle();
+                try{
+                    LokaliseUtil.downloadBundle(true);
+                    logInfo("Lokalise bundle downloaded with async API");
+                } catch (Exception e) {
+                    logInfo("Lokalise bundle async API download failed, trying sync API...");
+                    LokaliseUtil.downloadBundle(false);
+                    logInfo("Lokalise bundle downloaded with sync API");
+                }
+                this.lokaliseBundle = LokaliseUtil.getBundle();
 
         Allure.parameter("Platform", PropertiesUtil.ENV.getProperty("PLATFORM"));
 
